@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EbookHub — Premium eBook Marketplace</title>
+  <meta name="description" content="EbookHub is a modern, premium eBook marketplace for students, freelancers, and professionals." />
+  <link rel="canonical" href="https://ebookhub.io/" />
+  <meta property="og:title" content="EbookHub — Premium eBook Marketplace" />
+  <meta property="og:description" content="Discover curated eBooks, demo checkout, wishlist, and premium reading experiences." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ebookhub.io" />
+  <meta name="theme-color" content="#22C55E" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-muted: #f1f5f9;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --brand: #22C55E;
+      --brand-soft: rgba(34,197,94,0.12);
+      --shadow: 0 20px 80px rgba(15,23,42,0.08);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    html.dark { color-scheme: dark; }
+    html.dark { --bg: #020617; --surface: #111827; --surface-muted: #0f172a; --text: #f8fafc; --muted: #94a3b8; --border: #334155; --shadow: 0 20px 80px rgba(0,0,0,0.45); }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background: radial-gradient(circle at top, rgba(34,197,94,0.08), transparent 28%), var(--bg); color: var(--text); }
+    body::before { content:''; position:fixed; inset:0; pointer-events:none; background-image: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 30%), radial-gradient(circle at 80% 10%, rgba(34,197,94,0.16), transparent 18%); opacity:0.9; }
+    .container { width:min(1200px, calc(100% - 2rem)); margin:0 auto; position:relative; z-index:1; }
+    header { position:sticky; top:0; z-index:30; backdrop-filter:blur(20px); background:rgba(255,255,255,0.88); border-bottom:1px solid rgba(226,232,240,0.8); }
+    html.dark header { background:rgba(15,23,42,0.92); border-color:rgba(51,65,85,0.9); }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem 0; }
+    .brand { display:flex; align-items:center; gap:0.75rem; font-weight:800; letter-spacing:0.02em; font-size:1.05rem; color:var(--text); }
+    .brand-circle { width:2rem;height:2rem;border-radius:999px;background:var(--brand); display:grid; place-items:center; color:#fff; font-weight:700; }
+    nav { display:flex; gap:1.25rem; flex-wrap:wrap; }
+    nav a, .header-action { font-size:0.95rem; color:var(--muted); text-decoration:none; transition:.2s; }
+    nav a:hover, .header-action:hover { color:var(--brand); }
+    .button { border:none; cursor:pointer; border-radius:999px; padding:0.95rem 1.4rem; font-weight:700; transition:.25s; }
+    .button-primary { background:var(--brand); color:#fff; box-shadow:0 16px 45px rgba(34,197,94,0.28); }
+    .button-secondary { background:var(--surface); border:1px solid var(--border); color:var(--text); }
+    html.dark .button-secondary { background: #111827; border-color: #334155; }
+    .hero { padding:7rem 0 4rem; display:grid; gap:2rem; align-items:center; }
+    .hero-content { max-width:620px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:0.65rem; padding:0.75rem 1rem; border-radius:999px; background:rgba(34,197,94,0.12); color:var(--brand); font-weight:700; letter-spacing:0.08em; font-size:0.8rem; }
+    .hero-title { margin:1.2rem 0 1rem; font-size:3.7rem; line-height:1.02; letter-spacing:-0.05em; }
+    .hero-copy { font-size:1.05rem; line-height:1.8; color:var(--muted); }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem; }
+    .hero-panels { display:grid; gap:1rem; margin-top:2.5rem; }
+    .panel { background:var(--surface); border:1px solid var(--border); border-radius:2rem; box-shadow:var(--shadow); padding:1.4rem; }
+    .panel strong { display:block; margin-top:0.75rem; font-size:1.05rem; color:var(--text); }
+    .hero-visual { position:relative; min-height:520px; display:grid; place-items:center; }
+    .glass-card { width:100%; border-radius:2rem; padding:2rem; background:rgba(255,255,255,0.84); border:1px solid rgba(255,255,255,0.55); box-shadow:0 40px 80px rgba(15,23,42,0.15); position:relative; overflow:hidden; }
+    html.dark .glass-card { background:rgba(15,23,42,0.82); border-color:rgba(148,163,184,0.18); }
+    .glass-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 15% 20%, rgba(34,197,94,0.24), transparent 28%), radial-gradient(circle at 80% 25%, rgba(14,165,233,0.12), transparent 30%); opacity:0.7; pointer-events:none; }
+    .hero-visual-inner { position:relative; z-index:1; display:grid; gap:1rem; }
+    .hero-visual h3 { margin:0; font-size:1.5rem; color:#fff; }
+    .hero-visual p { color:rgba(255,255,255,0.85); line-height:1.7; }
+    .hero-visual .cards { display:grid; gap:1rem; margin-top:1rem; }
+    .mini-card { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); border-radius:1.5rem; padding:1rem; color:#fff; }
+    .stats-grid, .featured-grid, .category-grid, .testimonials-grid, .blog-grid, .faq-grid { display:grid; gap:1.25rem; }
+    .section { padding:4rem 0; }
+    .section-title { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.5rem; }
+    .section-title h2 { margin:0; font-size:2rem; }
+    .section-title p { color:var(--muted); }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:2rem; box-shadow:var(--shadow); overflow:hidden; transition:.3s; }
+    .card:hover { transform:translateY(-6px); }
+    .card img { width:100%; height:260px; object-fit:cover; }
+    .card-body { padding:1.5rem; }
+    .card-body p { margin:0.65rem 0; color:var(--muted); }
+    .badge { display:inline-flex; gap:0.35rem; align-items:center; padding:0.5rem 0.85rem; border-radius:999px; background:rgba(34,197,94,0.1); color:var(--brand); font-size:0.8rem; font-weight:700; }
+    .card-actions { margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .card-actions .button-secondary { padding:0.85rem 1rem; }
+    .counter-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .counter-card { border-radius:2rem; padding:2rem; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow); text-align:center; }
+    .counter-card strong { display:block; font-size:2rem; margin-bottom:0.5rem; }
+    .category-grid { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+    .category-pill { border-radius:1.75rem; border:1px solid var(--border); padding:1.3rem; background:var(--surface); box-shadow:var(--shadow); }
+    .testimonial-card { border-radius:2rem; padding:1.8rem; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow); }
+    .testimonial-card p { margin:0.85rem 0 0; color:var(--muted); }
+    .hero-search { display:grid; gap:1rem; margin-top:2rem; grid-template-columns:1fr auto; }
+    .hero-search input, .hero-search select { border:1px solid var(--border); border-radius:999px; padding:1rem 1.25rem; outline:none; background:var(--surface); color:var(--text); }
+    .hero-search button { min-width:160px; }
+    .newsletter-card { border-radius:2rem; background:linear-gradient(135deg, rgba(34,197,94,0.15), rgba(255,255,255,0.7)); border:1px solid rgba(34,197,94,0.18); padding:2rem; box-shadow:var(--shadow); }
+    .newsletter-card input { width:100%; border:1px solid rgba(15,23,42,0.08); border-radius:999px; padding:1rem 1.25rem; outline:none; }
+    .newsletter-card button { margin-top:1rem; }
+    .faq-item { border-radius:1.75rem; border:1px solid var(--border); background:var(--surface); overflow:hidden; }
+    .faq-question { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.3rem 1.5rem; cursor:pointer; }
+    .faq-answer { padding:1rem 1.5rem 1.5rem; border-top:1px solid var(--border); color:var(--muted); display:none; }
+    .faq-item.open .faq-answer { display:block; }
+    .badge-pill { background:rgba(34,197,94,0.1); color:var(--brand); }
+    .footer { padding:3rem 0 2rem; color:var(--muted); }
+    .footer-grid { display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .cta-strip { margin:4rem 0 0; padding:2rem 2.5rem; border-radius:2rem; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.2); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; }
+    .mobile-only { display:none; }
+    @media (max-width: 980px) {
+      .hero { padding-top:5rem; }
+      .hero-title { font-size:2.8rem; }
+      .hero-search { grid-template-columns:1fr; }
+      .section-title { flex-direction:column; align-items:flex-start; }
+      nav { display:none; }
+      .mobile-only { display:block; }
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size:2.3rem; }
+      .hero { padding-top:4rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-inner">
+      <a href="https://ebookhub.io#home" class="brand"><span class="brand-circle">E</span> EbookHub</a>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:0.9rem;flex-wrap:wrap;">
+        <a href="#login" class="header-action">Demo Login</a>
+        <button class="button button-secondary" id="themeToggle" aria-label="Toggle theme">Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">Premium eBook Marketplace</span>
+        <h1 class="hero-title">Discover, read, and own premium eBooks with a modern SaaS experience.</h1>
+        <p class="hero-copy">EbookHub is crafted for students, freelancers, founders, and curious readers seeking smart search, smooth checkout, and a polished digital library.</p>
+        <div class="hero-actions">
+          <a href="#catalog" class="button button-primary">Explore eBooks</a>
+          <a href="#login" class="button button-secondary">Start Reading</a>
+        </div>
+        <div class="hero-search">
+          <input type="search" id="searchInput" placeholder="Search titles, authors or categories" />
+          <select id="categoryFilter" aria-label="Filter categories">
+            <option value="all">All categories</option>
+            <option>Business</option>
+            <option>Programming</option>
+            <option>Artificial Intelligence</option>
+            <option>Design</option>
+            <option>Education</option>
+            <option>Self Improvement</option>
+            <option>Productivity</option>
+            <option>Novels</option>
+            <option>Technology</option>
+          </select>
+        </div>
+        <div class="hero-panels">
+          <div class="panel"><strong>Trusted by readers</strong> Designed for modern learners, glitch-free interactions, and premium eBook launches.</div>
+          <div class="panel"><strong>Demo checkout ready</strong> Payment simulation, library unlock, and download flow without any real transaction.</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="glass-card">
+          <div class="hero-visual-inner">
+            <h3>Top eBook of the week</h3>
+            <p>AI for Creatives — Practical workflows for productivity and smart content creation.</p>
+            <div class="cards">
+              <div class="mini-card">14.8K active readers</div>
+              <div class="mini-card">4.8 star rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="catalog">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Featured eBooks</p>
+          <h2>Curated titles for every ambition.</h2>
+        </div>
+        <p>Find books across business, AI, productivity, and fiction with instant filters.</p>
+      </div>
+      <div class="featured-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1200&q=80" alt="Startup Playbook" />
+          <div class="card-body">
+            <span class="badge">Business</span>
+            <h3>The Startup Playbook</h3>
+            <p>Launch bold products with practical guidance for modern founders.</p>
+            <div class="card-actions"><button class="button button-primary">Buy Now</button><button class="button button-secondary">View Details</button></div>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1200&q=80" alt="React Renaissance" />
+          <div class="card-body">
+            <span class="badge">Programming</span>
+            <h3>React Renaissance</h3>
+            <p>Master contemporary React patterns for high-performance applications.</p>
+            <div class="card-actions"><button class="button button-primary">Buy Now</button><button class="button button-secondary">View Details</button></div>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1531497865140-96ca7af4b6a9?auto=format&fit=crop&w=1200&q=80" alt="AI for Creatives" />
+          <div class="card-body">
+            <span class="badge">AI</span>
+            <h3>AI for Creatives</h3>
+            <p>Boost workflows with practical generative AI methods for modern creators.</p>
+            <div class="card-actions"><button class="button button-primary">Buy Now</button><button class="button button-secondary">View Details</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Popular categories</p>
+          <h2>Explore genres built for every reader.</h2>
+        </div>
+      </div>
+      <div class="category-grid">
+        <div class="category-pill"><strong>Business</strong><p>Strategy and growth reads.</p></div>
+        <div class="category-pill"><strong>Programming</strong><p>Developer guides and frameworks.</p></div>
+        <div class="category-pill"><strong>Artificial Intelligence</strong><p>AI ideas for modern workflows.</p></div>
+        <div class="category-pill"><strong>Design</strong><p>Systems, UX, and visual thinking.</p></div>
+        <div class="category-pill"><strong>Self Improvement</strong><p>Habits and productivity.</p></div>
+        <div class="category-pill"><strong>Novels</strong><p>Immersive storytelling.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Why EbookHub</p>
+          <h2>Trusted by learners and professionals.</h2>
+        </div>
+      </div>
+      <div class="stats-grid counter-grid">
+        <div class="counter-card"><strong>320+</strong><span>eBooks available</span></div>
+        <div class="counter-card"><strong>14.8K</strong><span>Active learners</span></div>
+        <div class="counter-card"><strong>2.4K</strong><span>5-star reviews</span></div>
+        <div class="counter-card"><strong>86</strong><span>Trusted authors</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">FAQ</p>
+          <h2>Common demo questions answered.</h2>
+        </div>
+      </div>
+      <div class="faq-grid"> 
+        <div class="faq-item open">
+          <button class="faq-question"><span>Can I use EbookHub without creating an account?</span><span>+</span></button>
+          <div class="faq-answer">Yes. Demo login is lightweight and only requires a name to personalize your experience and save your wishlist locally.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question"><span>Are payments real on this demo platform?</span><span>+</span></button>
+          <div class="faq-answer">No. All checkout flows are simulated for demonstration purposes and no real transactions take place.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question"><span>How does the wishlist work?</span><span>+</span></button>
+          <div class="faq-answer">Wishlist items are stored in your browser using Local Storage so your favorites remain accessible on the same device.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Content & Blogs</p>
+          <h2>Insights for growth, reading habits, and productivity.</h2>
+        </div>
+      </div>
+      <div class="blog-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+        <article class="card"><div class="card-body"><span class="badge">Productivity</span><h3>Reading Habits for Success</h3><p>Build daily reading routines that boost learning and clarity.</p></div></article>
+        <article class="card"><div class="card-body"><span class="badge">Design</span><h3>Design Thinking for Everyone</h3><p>Use creative problem solving across study, work, and product design.</p></div></article>
+        <article class="card"><div class="card-body"><span class="badge">AI</span><h3>AI Tools for Knowledge Workers</h3><p>Discover practical AI workflows for students, freelancers, and pros.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="login">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Demo Login</p>
+          <h2>Get started with a personalized reading session.</h2>
+        </div>
+      </div>
+      <div class="panel" style="display:grid; gap:1.5rem;">
+        <p>Enter your name to create a demo account. Session data like wishlist and purchases stays in your browser.</p>
+        <input type="text" id="demoName" placeholder="Your name" style="width:100%;border:1px solid var(--border);border-radius:999px;padding:1rem 1.25rem;outline:none;background:var(--surface);color:var(--text);" />
+        <button class="button button-primary" onclick="loginDemo()">Start Demo Session</button>
+        <p id="loginMessage" style="color:var(--brand);font-weight:700;"></p>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">About Us</p>
+          <h2>A premium marketplace built for modern readers.</h2>
+        </div>
+      </div>
+      <div class="category-grid">
+        <div class="category-pill"><strong>Mission</strong><p>Create a polished demo experience that feels launch-ready.</p></div>
+        <div class="category-pill"><strong>Vision</strong><p>Empower readers with premium UI, smooth checkout, and smart discovery.</p></div>
+        <div class="category-pill"><strong>Support</strong><p>Live demo chat, FAQ, and friendly guidance for every visit.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-title">
+        <div>
+          <p class="badge-pill">Contact</p>
+          <h2>Reach us for demo support and feedback.</h2>
+        </div>
+      </div>
+      <div class="panel" style="display:grid; gap:1.5rem;">
+        <p style="margin:0; color:var(--muted);">Support is available for questions about the demo, design, or future product ideas.</p>
+        <a href="mailto:support@ebookhub.example" class="button button-secondary">support@ebookhub.example</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="newsletter-card">
+        <h2>Join the EbookHub newsletter</h2>
+        <p>Subscribe for product updates, new eBook drops, and reading recommendations.</p>
+        <input type="email" id="newsletterEmail" placeholder="Enter your email" />
+        <button class="button button-primary" onclick="subscribeNewsletter()">Subscribe</button>
+        <p id="newsletterMessage" style="margin-top:1rem;color:var(--brand);font-weight:700;"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <div class="footer-grid">
+      <div>
+        <h3>EbookHub</h3>
+        <p>Premium eBook marketplace at <strong>ebookhub.io</strong> for readers, learners, and creators.</p>
+      </div>
+      <div>
+        <h4>Marketplace</h4>
+        <p>Catalog · Blog · Wishlist · Cart</p>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <p>FAQ · Contact · Demo Login</p>
+      </div>
+    </div>
+    <div style="margin-top:2rem; color:var(--muted);">Made with premium design principles for a modern SaaS reading experience.</div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.documentElement;
+    function updateThemeLabel() {
+      themeToggle.textContent = body.classList.contains('dark') ? 'Light' : 'Dark';
+    }
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      localStorage.setItem('ebookhub-theme', body.classList.contains('dark') ? 'dark' : 'light');
+      updateThemeLabel();
+    });
+    const savedTheme = localStorage.getItem('ebookhub-theme');
+    if (savedTheme === 'dark') body.classList.add('dark');
+    updateThemeLabel();
+
+    function loginDemo() {
+      const name = document.getElementById('demoName').value.trim();
+      const message = document.getElementById('loginMessage');
+      if (!name) { message.textContent = 'Please enter your name.'; return; }
+      localStorage.setItem('ebookhub-user', name);
+      message.textContent = `Welcome, ${name}! Your demo session is ready.`;
+    }
+
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletterEmail').value.trim();
+      const message = document.getElementById('newsletterMessage');
+      if (!email || !email.includes('@')) { message.textContent = 'Enter a valid email.'; return; }
+      message.textContent = 'Subscribed successfully!';
+    }
+
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach((item) => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        const open = item.classList.contains('open');
+        faqItems.forEach((other) => other.classList.remove('open'));
+        if (!open) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
